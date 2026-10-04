@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {
   AppBar,
@@ -23,7 +24,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
-
   const navigate = useNavigate()
 
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -41,28 +41,29 @@ export default function Header() {
 
   const logout = () => {
     sessionStorage.removeItem('currentuser')
-    navigate('/')
     handleClose()
+    setMobileOpen(false)
+    navigate('/')
   }
 
   const handleNavigate = (path) => {
     navigate(path)
     setMobileOpen(false)
+    handleClose()
   }
 
   return (
-
     <AppBar
       position="sticky"
       sx={{
         bgcolor: '#006d77'
       }}
     >
-
       <Toolbar
         sx={{
           minHeight: { xs: 64, sm: 70 },
-          px: { xs: 2, sm: 3, md: 4 },
+          px: { xs: 2, sm: 3, md: 6 },
+          py: { xs: 0.5, sm: 1, md: 1 },
           justifyContent: 'space-between'
         }}
       >
@@ -78,7 +79,6 @@ export default function Header() {
           }}
           onClick={() => navigate('/')}
         >
-
           <LocalHospitalIcon
             sx={{
               fontSize: { xs: 27, sm: 32 }
@@ -91,7 +91,7 @@ export default function Header() {
               fontSize: {
                 xs: '0.95rem',
                 sm: '1.15rem',
-                md: '1.25rem'
+                md: '1.8rem'
               },
               whiteSpace: 'nowrap',
               overflow: 'hidden',
@@ -100,22 +100,20 @@ export default function Header() {
           >
             Dr. Don's Family Health Center
           </Typography>
-
         </Box>
-
 
         {/* DESKTOP NAVIGATION */}
         <Box
           sx={{
             display: {
-              xs: 'none',
-              md: 'flex'
+            xs: 'none',
+            sm: 'none',
+            md: 'flex'
             },
             alignItems: 'center',
             gap: 0.5
           }}
         >
-
           <Button
             color="inherit"
             onClick={() => navigate('/')}
@@ -123,12 +121,24 @@ export default function Header() {
             Home
           </Button>
 
-
-
-          {/* USER */}
           {user ? (
-
-            <>
+            <Box  sx={{
+                display: {
+                xs: 'none',
+                sm: 'none',
+                md: 'flex'
+              },
+              alignItems: 'center',
+              gap: 0.5
+             }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  pl: 3
+                }}
+              >
+                Welcome {user.name}
+              </Typography>
 
               <Avatar
                 sx={{
@@ -147,39 +157,26 @@ export default function Header() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-
                 <MenuItem
-                  onClick={() => {
-                    navigate('/user/profile')
-                    handleClose()
-                  }}
+                  onClick={() => handleNavigate('/user/profile')}
                 >
                   My Profile
                 </MenuItem>
 
                 <MenuItem
-                  onClick={() => {
-                    navigate('/user/appoinmentreg')
-                    handleClose()
-                  }}
+                  onClick={() => handleNavigate('/user/appoinmentreg')}
                 >
                   Book Appointment
                 </MenuItem>
 
                 <MenuItem
-                  onClick={() => {
-                    navigate('/user/myAppoinment')
-                    handleClose()
-                  }}
+                  onClick={() => handleNavigate('/user/myAppoinment')}
                 >
                   My Appointments
                 </MenuItem>
 
                 <MenuItem
-                  onClick={() => {
-                    navigate('/user/myReport')
-                    handleClose()
-                  }}
+                  onClick={() => handleNavigate('/user/myReport')}
                 >
                   My Reports
                 </MenuItem>
@@ -187,74 +184,66 @@ export default function Header() {
                 <MenuItem onClick={logout}>
                   Logout
                 </MenuItem>
-
               </Menu>
-
-            </>
-
+            </Box>
           ) : (
-
             <Button
               variant="contained"
               color="secondary"
               sx={{ ml: 1 }}
-              onClick={() => navigate('/LOGIN')}
+              onClick={() => navigate('/login')}
             >
               Login
             </Button>
-
           )}
-
         </Box>
 
+        {/* MOBILE NAVIGATION */}
+     <Box
+  sx={{
+    display: {
+      xs: 'flex',
+      sm: 'flex',
+      md: 'none'
+    },
+    alignItems: 'center',
+    gap: 1
+  }}
+>
+  {user && (
+    <Avatar
 
-        {/* MOBILE */}
-        <Box
-          sx={{
-            display: {
-              xs: 'flex',
-              md: 'none'
-            },
-            alignItems: 'center',
-            gap: 1
-          }}
-        >
+      sx={{
+        display: {
+      xs: 'none',
+      sm: 'none',
+      md: 'flex'
+    },
+        width: 35,
+        height: 35,
+        cursor: 'pointer'
+      }}
+      onClick={handleMenu}
+    >
+      {user.name?.charAt(0).toUpperCase()}
+    </Avatar>
+  )}
 
-          {/* User Avatar on mobile */}
-          {user && (
-            <Avatar
-              sx={{
-                width: 35,
-                height: 35,
-                cursor: 'pointer'
-              }}
-              onClick={handleMenu}
-            >
-              {user.name?.charAt(0).toUpperCase()}
-            </Avatar>
-          )}
-
-          {/* Hamburger */}
-          <IconButton
-            color="inherit"
-            onClick={() => setMobileOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-
-        </Box>
-
+  <IconButton
+    color="inherit"
+    onClick={() => setMobileOpen(true)}
+  >
+    <MenuIcon />
+  </IconButton>
+</Box>
       </Toolbar>
 
-
       {/* MOBILE DRAWER */}
-
       <Drawer
         anchor="right"
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
       >
-
         <Box
           sx={{
             width: {
@@ -266,9 +255,7 @@ export default function Header() {
             color: 'white'
           }}
         >
-
-          {/* Drawer Header */}
-
+          {/* DRAWER HEADER */}
           <Box
             sx={{
               display: 'flex',
@@ -278,14 +265,15 @@ export default function Header() {
               borderBottom: '1px solid rgba(255,255,255,0.2)'
             }}
           >
-
             <Typography
               fontWeight="bold"
               sx={{
                 fontSize: '1.1rem'
               }}
             >
-              Dr.Don's Family <br /> Health center
+              Dr. Don's Family
+              <br />
+              Health Center
             </Typography>
 
             <IconButton
@@ -296,14 +284,10 @@ export default function Header() {
             >
               <CloseIcon />
             </IconButton>
-
           </Box>
 
-
-          {/* Mobile Menu */}
-
+          {/* MOBILE MENU */}
           <List>
-
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => handleNavigate('/')}
@@ -312,58 +296,8 @@ export default function Header() {
               </ListItemButton>
             </ListItem>
 
-
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => handleNavigate('/doctors')}
-              >
-                <ListItemText primary="Doctors" />
-              </ListItemButton>
-            </ListItem>
-
-
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => handleNavigate('/service')}
-              >
-                <ListItemText primary="Services" />
-              </ListItemButton>
-            </ListItem>
-
-
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => handleNavigate('/about')}
-              >
-                <ListItemText primary="About" />
-              </ListItemButton>
-            </ListItem>
-
-
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => handleNavigate('/contact')}
-              >
-                <ListItemText primary="Contact" />
-              </ListItemButton>
-            </ListItem>
-
-
-            {/* Logged in user */}
-
             {user ? (
-
               <>
-
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => handleNavigate('/user/profile')}
-                  >
-                    <ListItemText primary="My Profile" />
-                  </ListItemButton>
-                </ListItem>
-
-
                 <ListItem disablePadding>
                   <ListItemButton
                     onClick={() => handleNavigate('/user/appoinmentreg')}
@@ -372,51 +306,25 @@ export default function Header() {
                   </ListItemButton>
                 </ListItem>
 
-
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => handleNavigate('/user/myAppoinment')}
-                  >
-                    <ListItemText primary="My Appointments" />
-                  </ListItemButton>
-                </ListItem>
-
-
-                <ListItem disablePadding>
-                  <ListItemButton
-                    onClick={() => handleNavigate('/user/myReport')}
-                  >
-                    <ListItemText primary="My Reports" />
-                  </ListItemButton>
-                </ListItem>
-
-
                 <ListItem disablePadding>
                   <ListItemButton onClick={logout}>
                     <ListItemText primary="Logout" />
                   </ListItemButton>
                 </ListItem>
-
               </>
-
             ) : (
-
               <ListItem disablePadding>
                 <ListItemButton
-                  onClick={() => handleNavigate('/LOGIN')}
+                  onClick={() => handleNavigate('/login')}
                 >
                   <ListItemText primary="Login" />
                 </ListItemButton>
               </ListItem>
-
             )}
-
           </List>
-
         </Box>
-
       </Drawer>
-
     </AppBar>
   )
 }
+

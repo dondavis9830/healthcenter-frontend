@@ -28,6 +28,12 @@ export default function Login() {
       console.log(res);
       console.log(res.data[0]);
       const user= res.data[0]
+      console.log(user);
+      
+      if (res.data.length === 0) {
+        alert("Invalid Email, Password or User ID")
+        return
+      }
 
       if(res.data.length>0){
         sessionStorage.setItem(`currentuser`,JSON.stringify(user))
@@ -35,7 +41,6 @@ export default function Login() {
       }else{
         alert('plz Register Now')
       }    
-
 
           switch (user.role) { 
             case "user": navigate('/user') 

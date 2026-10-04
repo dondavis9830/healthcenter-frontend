@@ -78,13 +78,13 @@ export default function AddPatient() {
           const res = await addPatientAPI(patient);
           console.log(res.data);
 
-          const nextPhid = Number(phidId) + 1;   //value incrimenting for next patient
+          const nextPhid = Number(phidId)+1;   //value incrimenting for next patient
           console.log(nextPhid);                 
     
           const resp = await updatedPhidAPI(nextPhid);   //data patch doing
           console.log(resp.data);
 
-          if(id){                                     //deleting data from appoinmet
+          if(id){                                       //deleting data from appoinmet
             await deleteAppointmentAPI(id);
           }
           alert("Successfully patient details added");

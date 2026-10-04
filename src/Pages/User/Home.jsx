@@ -38,6 +38,38 @@ export default function Home() {
   const navigate = useNavigate()
 
   const [doctors, setDoctors] = useState([])
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+
+    const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const sendMessage = () => {
+    const phoneNumber = '+919544598386'
+
+    const whatsappMessage = `
+   My iame is ${formData.name}
+   ${formData.message}
+    `
+
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`,
+      '_blank'
+    )
+
+     setFormData({
+    name: '',
+    email: '',
+    message: ''
+  })
+  }
 
 
   // ==============================
@@ -1169,6 +1201,8 @@ export default function Home() {
                     >
                       Dr. Don's Family Health Center
                     </Typography>
+                    <Typography>Kuttur po ,Thrissur</Typography>
+                    <Typography>680013</Typography>
 
                   </Box>
 
@@ -1198,7 +1232,7 @@ export default function Home() {
                       color="text.secondary"
                       sx={{ mt: 0.5 }}
                     >
-                      +91 98765 43210
+                      +91 9544598386
                     </Typography>
 
                   </Box>
@@ -1232,7 +1266,7 @@ export default function Home() {
                         wordBreak: 'break-word'
                       }}
                     >
-                      info@drdonhealthcare.com
+                      donhealthcare@gmail.com
                     </Typography>
 
                   </Box>
@@ -1253,48 +1287,48 @@ export default function Home() {
               }}
             >
 
-              <Stack spacing={2}>
+               <Stack spacing={2}>
 
-                <TextField
-                  fullWidth
-                  label="Your Name"
-                />
+      <TextField
+        fullWidth
+        label="Your Name"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+      />
 
-                <TextField
-                  fullWidth
-                  label="Email"
-                  type="email"
-                />
 
-                <TextField
-                  fullWidth
-                  label="Message"
-                  multiline
-                  rows={5}
-                />
+      <TextField
+        fullWidth
+        label="Message"
+        multiline
+        rows={5}
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+      />
 
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    alignSelf: {
-                      xs: 'stretch',
-                      sm: 'flex-start'
-                    },
+      <Button
+        variant="contained"
+        size="large"
+        onClick={sendMessage}
+        sx={{
+          alignSelf: {
+            xs: 'stretch',
+            sm: 'flex-start'
+          },
+          backgroundColor: '#006d77',
+          px: 4,
+          borderRadius: 2,
+          '&:hover': {
+            backgroundColor: '#00545c'
+          }
+        }}
+      >
+        Send Message
+      </Button>
 
-                    backgroundColor: '#006d77',
-                    px: 4,
-                    borderRadius: 2,
-
-                    '&:hover': {
-                      backgroundColor: '#00545c'
-                    }
-                  }}
-                >
-                  Send Message
-                </Button>
-
-              </Stack>
+    </Stack>
 
             </Grid>
 
@@ -1530,7 +1564,7 @@ export default function Home() {
                       wordBreak: 'break-word'
                     }}
                   >
-                    drdon'shelthcenter@gmail.com
+                     donhealthcare@gmail.com
                   </Typography>
 
                 </Stack>

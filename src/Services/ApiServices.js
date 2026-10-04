@@ -11,8 +11,8 @@ export const checkUseridAndEmailAPI=async(email)=>{
 }
 
 // search user for login ,checking in users array
-export const searchUserAPI=async(email)=>{
-    return await axiosService('GET',`/users?email=${email}`,{})
+export const searchUserAPI=async(email,password,userID)=>{
+    return await axiosService('GET',`/users?email=${email}&password=${password}&userID=${userID}`)
 }
 
 // user booking appointment
