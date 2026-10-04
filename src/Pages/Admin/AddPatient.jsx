@@ -91,7 +91,7 @@ export default function AddPatient() {
           const message = `
             Hello ${patient.name},
             
-            Your appointment at Dr. Don Healthcare Clinic has been confirmed.
+            Your appointment at Dr. Don's Family Health Center has been confirmed.
 
             Doctor: ${patient.doctor}
             Department: ${patient.department}
@@ -99,7 +99,7 @@ export default function AddPatient() {
             Status: ${patient.status}
 
             Thank you.
-            Dr. Don Healthcare Clinic
+            Dr. Don's Family Health Center
           `;
 
            const phone = `91${patient.number}`;
@@ -107,7 +107,7 @@ export default function AddPatient() {
            const whatsappURL =
              `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
-              window.open(whatsappURL, '_blank');
+    window.open(whatsappURL, '_blank');
 
           alert("Successfully patient details added");
           navigate("/admin/patients");
