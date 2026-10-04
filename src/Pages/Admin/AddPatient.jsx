@@ -87,6 +87,28 @@ export default function AddPatient() {
           if(id){                                       //deleting data from appoinmet
             await deleteAppointmentAPI(id);
           }
+            // WhatsApp message
+          const message = `
+            Hello ${patient.name},
+            
+            Your appointment at Dr. Don Healthcare Clinic has been confirmed.
+
+            Doctor: ${patient.doctor}
+            Department: ${patient.department}
+            Date & Time: ${dayjs(patient.schedule).format('DD-MM-YYYY hh:mm A')}
+            Status: ${patient.status}
+
+            Thank you.
+            Dr. Don Healthcare Clinic
+          `;
+
+           const phone = `91${patient.number}`;
+
+           const whatsappURL =
+             `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+              window.open(whatsappURL, '_blank');
+
           alert("Successfully patient details added");
           navigate("/admin/patients");
         }
