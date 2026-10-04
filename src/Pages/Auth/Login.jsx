@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Paper, Stack, TextField, Typography, Button} from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { searchUserAPI } from '../../Services/ApiServices'
@@ -15,8 +15,6 @@ export default function Login() {
 
 
   const handleLogin=async()=>{
-  console.log(userID,email,password);
-  
 
     if(email==""|| password==""||userID=="" ){
       alert('plz enter a valid details')
@@ -24,23 +22,19 @@ export default function Login() {
       }
 
     try{
-      const res = await searchUserAPI(email,password,userID)
-      console.log(res);
-      console.log(res.data[0]);
-      const user= res.data[0]
-      console.log(user);
-      
-      if (res.data.length === 0) {
+      const res = await searchUserAPI(
+        encodeURIComponent(email),
+        encodeURIComponent(password),
+        encodeURIComponent(userID)
+      )
+      if (!Array.isArray(res.data) || res.data.length === 0) {
         alert("Invalid Email, Password or User ID")
         return
       }
 
-      if(res.data.length>0){
-        sessionStorage.setItem(`currentuser`,JSON.stringify(user))
-        alert(`${user.name} login successfully compeated`)
-      }else{
-        alert('plz Register Now')
-      }    
+      const user = res.data[0]
+      sessionStorage.setItem(`currentuser`,JSON.stringify(user))
+      alert(`${user.name} login successfully compeated`)
 
           switch (user.role) { 
             case "user": navigate('/user') 
@@ -51,8 +45,8 @@ export default function Login() {
               break
             default: alert("Invalid role") }
     }
-    catch(err){
-      console.log(err);
+    catch{
+      alert('Unable to contact the login service. Please try again in a moment.')
     }
 
   }

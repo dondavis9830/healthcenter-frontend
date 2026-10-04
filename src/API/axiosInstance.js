@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const axoisInstance = axios .create({
     baseURL:'https://helthcenter-backend.onrender.com/',
-    timeout:1000
+    timeout:30000
 })
 
 axoisInstance.interceptors.response.use(
