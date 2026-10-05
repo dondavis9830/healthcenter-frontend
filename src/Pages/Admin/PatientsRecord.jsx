@@ -150,7 +150,7 @@ export default function PatientsRecord() {
                 >
                   <TableCell align='left'>{item.PHID}</TableCell>
                   <TableCell align='left' >{item.name}</TableCell>
-                  <TableCell align="center">{item.name}</TableCell>
+                  <TableCell align="center">{item.report?.disease}</TableCell>
                   <TableCell align="center">{item.number}</TableCell>
                   <TableCell align="center"><Button sx={{backgroundColor:'green',color:'white'}} onClick={()=>navigate(`/admin/patientReport/${item.id}`)} >View</Button></TableCell>
                   <TableCell align="center"><Button sx={{backgroundColor:'blue',color:'white'}} onClick={()=>navigate(`/admin/view/${item.id}`)}>View</Button></TableCell>
