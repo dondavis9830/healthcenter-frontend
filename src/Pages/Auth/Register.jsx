@@ -5,9 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { checkUseridAndEmailAPI, getAlldetailsAboutDoctorsAPI, registerUserAPI } from "../../Services/ApiServices";
 
 export default function Register() {
-
   const navigate = useNavigate();
-
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // state have given temporary data for dont have any issue while running
@@ -25,14 +23,12 @@ export default function Register() {
     // Check empty fields
     if (!user.userID ||!user.name || !user.email || !user.password || !confirmPassword) {
       alert("Please fill the fields");
-      return;
     }
 
 
     // Check password
     if (user.password !== confirmPassword) {
       alert("Passwords do not match");
-      return;
     }
 
     // Check email
@@ -40,7 +36,6 @@ export default function Register() {
 
     if (!emailPattern.test(user.email)) {
       alert("Please enter a valid email address");
-      return;
     }
 
     else{

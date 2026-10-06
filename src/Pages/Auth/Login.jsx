@@ -17,8 +17,7 @@ export default function Login() {
   const handleLogin=async()=>{
 
     if(email==""|| password==""||userID=="" ){
-      alert('plz enter a valid details')
-      return
+      alert('plz enter a valid details')  
       }
 
     try{
